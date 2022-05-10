@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Askme.Pagination;
 using AskMe.Data.DTO;
 using AskMe.Data.Models;
 using AskMe.Repositories.Manager;
+using AsKMe.Pagination;
 
 namespace AskMe.Logic
 {
@@ -59,6 +61,33 @@ namespace AskMe.Logic
                 CreatedById = updatedPost.CreatedById ?? new Guid()
             };
             return detailPost;
+        }
+        public async Task<PostDTO> GetPost(Guid postId)
+        {
+            // To-Do validate user exists, and is owner of the post
+            var post = await _repositoryManager.PostRepository.GetPostById(postId);
+            var detailPost = new PostDTO
+            {
+                Id = post.Id,
+                Content = post.Content,
+                Title = post.Title,
+                CreatedById = post.CreatedById ?? new Guid()
+            };
+            return detailPost;
+        }
+        public PaginationResult<PostItemDTO> GetPosts(Guid userId, int page, int pageSize)
+        {
+            var posts = _repositoryManager.PostRepository.GetPosts()
+                            .Where(post => post.CreatedById == userId)
+                            .Select(post => new PostItemDTO
+                            {
+                                Id = post.Id,
+                                ImageRef = post.ImageRef ?? null,
+                                Title = post.Title
+                            });
+            return posts.ToPagination(page, pageSize);
+
+
         }
     }
 }

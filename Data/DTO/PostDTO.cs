@@ -45,5 +45,15 @@ namespace AskMe.Data.DTO
         public string Content { get; set; }
         public Guid CreatedById { get; set; }
     }
+    public class PostItemDTO
+    {
+        public Guid Id { get; set; }
+        public string? ImageRef { get; set; }
+        /// <summary> 
+        /// Title of the post
+        /// </summary>
+        [JsonProperty("title")]
+        public string Title { get; set; }
+    }
 
 }

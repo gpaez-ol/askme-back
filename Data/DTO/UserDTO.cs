@@ -21,6 +21,7 @@ namespace AskMe.Data.DTO
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
+        [Range(0, 1)]
         public UserType Type { get; set; }
     }
     public class UserSignUpResponseDTO

@@ -7,6 +7,7 @@ using WebAPI.Models;
 using AskMe.Data.DTO;
 using AskMe.Repositories;
 using AskMe.Logic;
+using AsKMe.Pagination;
 
 namespace WebAPI.Controllers
 {
@@ -41,6 +42,30 @@ namespace WebAPI.Controllers
         {
             var newPost = await _postLogic.UpdatePost(post, postId);
             return newPost;
+        }
+        /*PostItemDTO*/
+        //Get controller
+        // / <summary>
+        // / This Get method brings the details of a post
+        // / </summary>
+        // / <returns>Ok(post)</returns>
+        [HttpGet("details/{postId}")]
+        public async Task<PostDTO> GetPost(Guid postId)
+        {
+            var post = await _postLogic.GetPost(postId);
+            return post;
+        }
+        /*PostItemDTO*/
+        //Get controller
+        // / <summary>
+        // / This Get method brings a list of posts
+        // / </summary>
+        // / <returns>Ok(post)</returns>
+        [HttpGet("{userId}")]
+        public PaginationResult<PostItemDTO> GetPosts(Guid userId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
+        {
+            var posts = _postLogic.GetPosts(userId, page, pageSize);
+            return posts;
         }
 
 
