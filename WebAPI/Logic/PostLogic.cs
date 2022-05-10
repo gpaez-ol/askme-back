@@ -73,6 +73,7 @@ namespace AskMe.Logic
                 Title = post.Title,
                 CreatedById = post.CreatedById ?? new Guid(),
                 Likes = post.LikedBy.Count(),
+                Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id }).ToList(),
                 LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
                 {
                     Id = user.Id,
@@ -104,6 +105,26 @@ namespace AskMe.Logic
                 post.LikedBy = new List<User>();
             }
             post.LikedBy.Add(user);
+            _repositoryManager.PostRepository.UpdatePost(post);
+            _repositoryManager.Save();
+        }
+        public async Task CommentPost(CommentCreateDTO comment, Guid postId, Guid userId)
+        {
+            var post = await _repositoryManager.PostRepository.GetPostById(postId);
+            var user = await _repositoryManager.UserRepository.GetUserById(userId);
+
+            if (post.Comments == null)
+            {
+                post.Comments = new List<Comment>();
+            }
+            var newComment = new Comment
+            {
+                DeletedAt = null,
+                PostId = post.Id,
+                Pinned = false,
+                Content = comment.Content
+            };
+            post.Comments.Add(newComment);
             _repositoryManager.PostRepository.UpdatePost(post);
             _repositoryManager.Save();
         }

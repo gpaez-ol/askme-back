@@ -14,6 +14,7 @@ namespace AskMe.Data.Models
         public Post Post { get; set; }
         public Guid? CommentId { get; set; }
         public Comment PrevComment { get; set; }
+        public string Content { get; set; }
         public Boolean Pinned { get; set; }
         public ICollection<Comment> Replies { get; set; }
         public ICollection<User> LikedBy { get; set; }

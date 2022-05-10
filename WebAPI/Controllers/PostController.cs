@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         // / <summary>
         // / This PUT method likes a post
         // / </summary>
-        // / <returns>Ok(post)</returns>
+        // / <returns>Ok()</returns>
         [HttpPut("like/{postId}/{userId}")]
         public async Task<ActionResult> LikePost(Guid postId, Guid userId)
         {
@@ -80,6 +80,17 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        //PUT controller
+        // / <summary>
+        // / This PUT method comments on a post
+        // / </summary>
+        // / <returns>Ok()</returns>
+        [HttpPut("comment/{postId}/{userId}")]
+        public async Task<ActionResult> CommentPost([FromBody] CommentCreateDTO comment, Guid postId, Guid userId)
+        {
+            await _postLogic.CommentPost(comment, postId, userId);
+            return Ok();
+        }
 
 
     }

@@ -37,7 +37,7 @@ namespace AskMe.Repositories
 
         public async Task<Post> GetPostById(Guid id)
         {
-            return await _context.Posts.Where(post => post.Id.Equals(id)).Include(post => post.LikedBy).FirstOrDefaultAsync();
+            return await _context.Posts.Where(post => post.Id.Equals(id)).Include(post => post.Comments).Include(post => post.LikedBy).FirstOrDefaultAsync();
         }
         public async Task<Post> CreatePost(Post post)
         {

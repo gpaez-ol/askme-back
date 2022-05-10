@@ -52,6 +52,7 @@ namespace AskMe.Data.DTO
         public Guid CreatedById { get; set; }
         public int Likes { get; set; }
         public ICollection<UserItemDTO>? LikedByPrev { get; set; }
+        public ICollection<CommentItemDTO>? Comments { get; set; }
     }
     public class PostItemDTO
     {
