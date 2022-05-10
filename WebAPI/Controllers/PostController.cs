@@ -27,10 +27,10 @@ namespace WebAPI.Controllers
         // / </summary>
         // / <returns>Ok(post)</returns>
         [HttpPost("{userId}")]
-        public async Task<PostDTO> CreatePost([FromBody] PostCreateDTO post, Guid userId)
+        public async Task<ActionResult<PostDTO>> CreatePost([FromBody] PostCreateDTO post, Guid userId)
         {
             var newPost = await _postLogic.CreatePost(post, userId);
-            return newPost;
+            return Ok(newPost);
         }
         //PUT controller
         // / <summary>
@@ -38,10 +38,10 @@ namespace WebAPI.Controllers
         // / </summary>
         // / <returns>Ok(post)</returns>
         [HttpPut("{postId}")]
-        public async Task<PostDTO> UpdatePost([FromBody] PostCreateDTO post, Guid postId)
+        public async Task<ActionResult<PostDTO>> UpdatePost([FromBody] PostCreateDTO post, Guid postId)
         {
             var newPost = await _postLogic.UpdatePost(post, postId);
-            return newPost;
+            return Ok(newPost);
         }
         /*PostItemDTO*/
         //Get controller
@@ -62,11 +62,24 @@ namespace WebAPI.Controllers
         // / </summary>
         // / <returns>Ok(post)</returns>
         [HttpGet("{userId}")]
-        public PaginationResult<PostItemDTO> GetPosts(Guid userId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
+        public ActionResult<PaginationResult<PostItemDTO>> GetPosts(Guid userId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
         {
             var posts = _postLogic.GetPosts(userId, page, pageSize);
-            return posts;
+            return Ok(posts);
         }
+
+        //PUT controller
+        // / <summary>
+        // / This PUT method likes a post
+        // / </summary>
+        // / <returns>Ok(post)</returns>
+        [HttpPut("like/{postId}/{userId}")]
+        public async Task<ActionResult> LikePost(Guid postId, Guid userId)
+        {
+            await _postLogic.LikePost(postId, userId);
+            return Ok();
+        }
+
 
 
     }

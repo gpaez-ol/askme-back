@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AskMe.Data.Models;
 using Newtonsoft.Json;
@@ -24,6 +25,11 @@ namespace AskMe.Data.DTO
         /*To-Do: Develop a JSON Schema for the content to have bold, italics, and images */
         public string Content { get; set; }
     }
+    public class UserItemDTO
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
     public class PostDTO
     {
         public string? ImageRef { get; set; }
@@ -44,6 +50,8 @@ namespace AskMe.Data.DTO
         /*To-Do: Develop a JSON Schema for the content to have bold, italics, and images */
         public string Content { get; set; }
         public Guid CreatedById { get; set; }
+        public int Likes { get; set; }
+        public ICollection<UserItemDTO>? LikedByPrev { get; set; }
     }
     public class PostItemDTO
     {

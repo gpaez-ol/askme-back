@@ -71,7 +71,14 @@ namespace AskMe.Logic
                 Id = post.Id,
                 Content = post.Content,
                 Title = post.Title,
-                CreatedById = post.CreatedById ?? new Guid()
+                CreatedById = post.CreatedById ?? new Guid(),
+                Likes = post.LikedBy.Count(),
+                LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
+                {
+                    Id = user.Id,
+                    Name = user.FirstName + " " + user.LastName
+                }).ToList()
+
             };
             return detailPost;
         }
@@ -86,8 +93,19 @@ namespace AskMe.Logic
                                 Title = post.Title
                             });
             return posts.ToPagination(page, pageSize);
+        }
+        public async Task LikePost(Guid postId, Guid userId)
+        {
+            var post = await _repositoryManager.PostRepository.GetPostById(postId);
+            var user = await _repositoryManager.UserRepository.GetUserById(userId);
 
-
+            if (post.LikedBy == null)
+            {
+                post.LikedBy = new List<User>();
+            }
+            post.LikedBy.Add(user);
+            _repositoryManager.PostRepository.UpdatePost(post);
+            _repositoryManager.Save();
         }
     }
 }
