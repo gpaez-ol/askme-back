@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebAPI.Models;
-using Askme.Data.DTO;
+using AskMe.Data.DTO;
 using AskMe.Repositories;
 
 namespace WebAPI.Controllers

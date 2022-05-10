@@ -10,6 +10,7 @@ namespace AskMe.Repositories.Manager
     public class RepositoryManager
     {
         private UserRepository _userRepository;
+        private PostRepository _postRepository;
         private readonly IOptions<AppConfig> _cloudConfig;
         private AskMeContext _context;
         private readonly IMapper _mapper;
@@ -31,6 +32,17 @@ namespace AskMe.Repositories.Manager
                     _userRepository = new UserRepository(_cloudConfig, _context, _mapper, _configuration);
                 }
                 return _userRepository;
+            }
+        }
+        public PostRepository PostRepository
+        {
+            get
+            {
+                if (_postRepository == null)
+                {
+                    _postRepository = new PostRepository(_context);
+                }
+                return _postRepository;
             }
         }
 

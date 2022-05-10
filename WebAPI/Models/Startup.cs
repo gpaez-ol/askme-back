@@ -11,6 +11,7 @@ using AskMe.Data.Context;
 using AskMe.Repositories;
 using AskMe.Repositories.Manager;
 using Microsoft.EntityFrameworkCore;
+using AskMe.Logic;
 
 namespace WebAPI
 {
@@ -53,6 +54,7 @@ namespace WebAPI
             services.AddScoped<RepositoryManager>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Logic Scope starts
+            services.AddScoped<PostLogic>();
             // Logic Scope ends
         }
 

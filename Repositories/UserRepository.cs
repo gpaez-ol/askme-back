@@ -18,7 +18,7 @@ using System.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using AskMe.Data.Config;
-using Askme.Data.DTO;
+using AskMe.Data.DTO;
 
 namespace AskMe.Repositories
 {

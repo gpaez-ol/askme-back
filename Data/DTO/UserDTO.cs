@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using AskMe.Data.Models;
+using Newtonsoft.Json;
 
-namespace Askme.Data.DTO
+namespace AskMe.Data.DTO
 {
     public class UserSignUpDTO
     {

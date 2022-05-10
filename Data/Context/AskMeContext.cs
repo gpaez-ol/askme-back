@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.AspNetCore.Http;
 using AskMe.Data.Context;
 using AskMe.Data.Models;
+using AskMe.Data.Configurations;
 
 namespace AskMe.Data.Context
 {
@@ -23,6 +24,8 @@ namespace AskMe.Data.Context
             }
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         private void BeginTransaction()
         {
@@ -45,6 +48,12 @@ namespace AskMe.Data.Context
             var numberOfEntries = base.SaveChanges();
             CommitChanges();
             return numberOfEntries;
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new PostConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
