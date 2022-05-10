@@ -32,18 +32,12 @@ namespace WebAPI
 
             services.Configure<CookieConfig>(Configuration.GetSection("Cookie"));
 
-            services.AddCors(options =>
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                options.AddPolicy(name: "AllowedCors", builder =>
-                {
-                    var origins = Configuration.GetSection("Origins").Value.Split(";");
-                    builder
-                        .WithOrigins(origins)
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                });
-            });
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddDbContext<AskMeContext>(
                 opt => ConfigureDatabaseService(opt),
                 ServiceLifetime.Scoped
@@ -66,7 +60,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseCors("AllowedCors");
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 
