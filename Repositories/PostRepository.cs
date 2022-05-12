@@ -1,24 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Threading.Tasks;
-using Amazon;
-using Amazon.CognitoIdentityProvider;
-using Amazon.CognitoIdentityProvider.Model;
-using Amazon.Extensions.CognitoAuthentication;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using AskMe.Data.Context;
 using AskMe.Data.Models;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Net.Http;
-using Microsoft.Extensions.Configuration;
-using AskMe.Data.Config;
-using AskMe.Data.DTO;
 
 namespace AskMe.Repositories
 {

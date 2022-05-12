@@ -91,7 +91,5 @@ namespace WebAPI.Controllers
             await _postLogic.CommentPost(comment, postId, userId);
             return Ok();
         }
-
-
     }
 }

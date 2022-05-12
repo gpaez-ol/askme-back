@@ -49,6 +49,7 @@ namespace WebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Logic Scope starts
             services.AddScoped<PostLogic>();
+            services.AddScoped<CommentLogic>();
             // Logic Scope ends
         }
 

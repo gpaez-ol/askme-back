@@ -122,7 +122,8 @@ namespace AskMe.Logic
                 DeletedAt = null,
                 PostId = post.Id,
                 Pinned = false,
-                Content = comment.Content
+                Content = comment.Content,
+                CreatedById = userId
             };
             post.Comments.Add(newComment);
             _repositoryManager.PostRepository.UpdatePost(post);
