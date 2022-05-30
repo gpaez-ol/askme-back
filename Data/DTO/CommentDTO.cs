@@ -22,6 +22,7 @@ namespace AskMe.Data.DTO
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
+        public bool Pinned { get; set; }
     }
 
 }

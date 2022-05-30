@@ -50,6 +50,7 @@ namespace WebAPI
             // Logic Scope starts
             services.AddScoped<PostLogic>();
             services.AddScoped<CommentLogic>();
+            services.AddScoped<CreatorLogic>();
             // Logic Scope ends
         }
 

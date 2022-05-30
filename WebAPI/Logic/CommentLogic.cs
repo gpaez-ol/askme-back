@@ -38,22 +38,54 @@ namespace AskMe.Logic
         public PaginationResult<CommentItemDTO> GetCommentsOnPost(Guid postId, int page, int pageSize)
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.PostId != null && comment.PostId == postId)
+                            .OrderBy(comment => comment.Pinned)
                             .Select(comment => new CommentItemDTO
                             {
                                 Id = comment.Id,
-                                Content = comment.Content
+                                Content = comment.Content,
+                                Pinned = comment.Pinned
                             });
             return posts.ToPagination(page, pageSize);
         }
         public PaginationResult<CommentItemDTO> GetCommentsOnComment(Guid commentId, int page, int pageSize)
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.CommentId != null && comment.CommentId == commentId)
+                            .OrderBy(comment => comment.Pinned)
                             .Select(comment => new CommentItemDTO
                             {
                                 Id = comment.Id,
-                                Content = comment.Content
+                                Content = comment.Content,
+                                Pinned = comment.Pinned
                             });
             return posts.ToPagination(page, pageSize);
+        }
+        public async Task PinComment(Guid commentId, Guid userId)
+        {
+            var comment = await _repositoryManager.CommentRepository.GetCommentById(commentId);
+            if (comment.PostId != null && comment.PostId != default(Guid))
+            {
+                var post = await _repositoryManager.PostRepository.GetPostById(comment.PostId.GetValueOrDefault());
+                if (post != null && post != default(Post) && post.CreatedById == userId)
+                {
+                    comment.Pinned = true;
+                }
+                _repositoryManager.CommentRepository.UpdateComment(comment);
+                _repositoryManager.Save();
+            }
+        }
+        public async Task UnpinComment(Guid commentId, Guid userId)
+        {
+            var comment = await _repositoryManager.CommentRepository.GetCommentById(commentId);
+            if (comment.PostId != null && comment.PostId != default(Guid))
+            {
+                var post = await _repositoryManager.PostRepository.GetPostById(comment.PostId.GetValueOrDefault());
+                if (post != null && post != default(Post) && post.CreatedById == userId)
+                {
+                    comment.Pinned = false;
+                }
+                _repositoryManager.CommentRepository.UpdateComment(comment);
+                _repositoryManager.Save();
+            }
         }
         public async Task LikeComment(Guid commentId, Guid userId)
         {

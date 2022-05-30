@@ -79,5 +79,27 @@ namespace WebAPI.Controllers
             await _commentLogic.LikeComment(commentId, userId);
             return Ok();
         }
+        //PUT controller
+        // / <summary>
+        // / This PUT method pins a comment
+        // / </summary>
+        // / <returns>Ok()</returns>
+        [HttpPut("pin/{commentId}/{userId}")]
+        public async Task<ActionResult> PinComment(Guid commentId, Guid userId)
+        {
+            await _commentLogic.PinComment(commentId, userId);
+            return Ok();
+        }
+        //PUT controller
+        // / <summary>
+        // / This PUT method unpins a comment
+        // / </summary>
+        // / <returns>Ok()</returns>
+        [HttpPut("unpin/{commentId}/{userId}")]
+        public async Task<ActionResult> UnpinComment(Guid commentId, Guid userId)
+        {
+            await _commentLogic.UnpinComment(commentId, userId);
+            return Ok();
+        }
     }
 }

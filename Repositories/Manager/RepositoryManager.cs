@@ -12,6 +12,7 @@ namespace AskMe.Repositories.Manager
         private UserRepository _userRepository;
         private PostRepository _postRepository;
         private CommentRepository _commentRepository;
+        private CreatorRepository _creatorRepository;
         private readonly IOptions<AppConfig> _cloudConfig;
         private AskMeContext _context;
         private readonly IMapper _mapper;
@@ -44,6 +45,17 @@ namespace AskMe.Repositories.Manager
                     _postRepository = new PostRepository(_context);
                 }
                 return _postRepository;
+            }
+        }
+        public CreatorRepository CreatorRepository
+        {
+            get
+            {
+                if (_creatorRepository == null)
+                {
+                    _creatorRepository = new CreatorRepository(_context);
+                }
+                return _creatorRepository;
             }
         }
         public CommentRepository CommentRepository

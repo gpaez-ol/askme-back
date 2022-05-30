@@ -58,7 +58,7 @@ namespace AskMe.Repositories
 
         public async Task<User> GetUserById(Guid id)
         {
-            return await _context.Users.Where(user => user.Id.Equals(id)).FirstOrDefaultAsync();
+            return await _context.Users.Where(user => user.Id.Equals(id)).Include(user => user.Following).FirstOrDefaultAsync();
         }
         public async Task<User> GetUserByEmail(string email)
         {
