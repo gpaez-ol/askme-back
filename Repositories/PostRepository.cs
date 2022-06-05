@@ -17,7 +17,7 @@ namespace AskMe.Repositories
 
         public IQueryable<Post> GetPosts()
         {
-            return _context.Posts.Where(post => post.DeletedAt == null);
+            return _context.Posts.Include(post => post.LikedBy).Where(post => post.DeletedAt == null);
         }
 
         public async Task<Post> GetPostById(Guid id)

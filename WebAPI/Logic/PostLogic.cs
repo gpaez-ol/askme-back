@@ -91,7 +91,26 @@ namespace AskMe.Logic
                             {
                                 Id = post.Id,
                                 ImageRef = post.ImageRef ?? null,
-                                Title = post.Title
+                                Title = post.Title,
+                                Likes = post.LikedBy.Count(),
+                                Content = post.Content
+                            });
+            return posts.ToPagination(page, pageSize);
+        }
+        public async Task<PaginationResult<PostItemDTO>> GetDashboardPosts(Guid userId, int page, int pageSize)
+        {
+            var user = await _repositoryManager.UserRepository.GetUserById(userId);
+            var followingIds = user.Following.Select(following => following.Id).ToList();
+            followingIds.Add(userId);
+            var posts = _repositoryManager.PostRepository.GetPosts()
+                            .Where(post => post.CreatedById != null && followingIds.Contains((Guid)post.CreatedById))
+                            .Select(post => new PostItemDTO
+                            {
+                                Id = post.Id,
+                                ImageRef = post.ImageRef ?? null,
+                                Title = post.Title,
+                                Likes = post.LikedBy.Count(),
+                                Content = post.Content
                             });
             return posts.ToPagination(page, pageSize);
         }

@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         // / </summary>
         // / <returns>Ok(post)</returns>
         [HttpGet("post/{postId}")]
-        public ActionResult<PaginationResult<PostItemDTO>> GetPostComments(Guid postId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
+        public ActionResult<PaginationResult<CommentItemDTO>> GetPostComments(Guid postId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
         {
             var posts = _commentLogic.GetCommentsOnPost(postId, page, pageSize);
             return Ok(posts);

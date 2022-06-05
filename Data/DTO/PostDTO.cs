@@ -56,13 +56,19 @@ namespace AskMe.Data.DTO
     }
     public class PostItemDTO
     {
+        [JsonProperty("id")]
         public Guid Id { get; set; }
+        [JsonProperty("imageRef")]
         public string? ImageRef { get; set; }
         /// <summary> 
         /// Title of the post
         /// </summary>
         [JsonProperty("title")]
         public string Title { get; set; }
+        [JsonProperty("likes")]
+        public int Likes { get; set; }
+        [JsonProperty("content")]
+        public string Content { get; set; }
     }
 
 }
