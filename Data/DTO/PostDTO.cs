@@ -53,6 +53,7 @@ namespace AskMe.Data.DTO
         public int Likes { get; set; }
         public ICollection<UserItemDTO>? LikedByPrev { get; set; }
         public ICollection<CommentItemDTO>? Comments { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
     public class PostItemDTO
     {
@@ -69,6 +70,7 @@ namespace AskMe.Data.DTO
         public int Likes { get; set; }
         [JsonProperty("content")]
         public string Content { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 
 }

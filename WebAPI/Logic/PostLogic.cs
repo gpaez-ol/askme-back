@@ -29,7 +29,8 @@ namespace AskMe.Logic
                 Content = post.Content,
                 Title = post.Title,
                 CreatedById = userId,
-                DeletedAt = null
+                DeletedAt = null,
+                CreatedAt = DateTime.Now
             };
             // await _repositoryManager.GoalRepository.Create(goal);
             var createdPost = await _repositoryManager.PostRepository.CreatePost(newPost);
@@ -39,7 +40,8 @@ namespace AskMe.Logic
                 Id = createdPost.Id,
                 Content = createdPost.Content,
                 Title = createdPost.Title,
-                CreatedById = createdPost.CreatedById ?? new Guid()
+                CreatedById = createdPost.CreatedById ?? new Guid(),
+                CreatedAt = createdPost.CreatedAt
             };
             return detailPost;
 
@@ -58,7 +60,8 @@ namespace AskMe.Logic
                 Id = updatedPost.Id,
                 Content = updatedPost.Content,
                 Title = updatedPost.Title,
-                CreatedById = updatedPost.CreatedById ?? new Guid()
+                CreatedById = updatedPost.CreatedById ?? new Guid(),
+                CreatedAt = updatedPost.CreatedAt
             };
             return detailPost;
         }
@@ -74,6 +77,7 @@ namespace AskMe.Logic
                 CreatedById = post.CreatedById ?? new Guid(),
                 Likes = post.LikedBy.Count(),
                 Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id }).ToList(),
+                CreatedAt = post.CreatedAt,
                 LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
                 {
                     Id = user.Id,
@@ -93,7 +97,8 @@ namespace AskMe.Logic
                                 ImageRef = post.ImageRef ?? null,
                                 Title = post.Title,
                                 Likes = post.LikedBy.Count(),
-                                Content = post.Content
+                                Content = post.Content,
+                                CreatedAt = post.CreatedAt
                             });
             return posts.ToPagination(page, pageSize);
         }
@@ -104,13 +109,15 @@ namespace AskMe.Logic
             followingIds.Add(userId);
             var posts = _repositoryManager.PostRepository.GetPosts()
                             .Where(post => post.CreatedById != null && followingIds.Contains((Guid)post.CreatedById))
+                            .OrderByDescending(post => post.CreatedAt)
                             .Select(post => new PostItemDTO
                             {
                                 Id = post.Id,
                                 ImageRef = post.ImageRef ?? null,
                                 Title = post.Title,
                                 Likes = post.LikedBy.Count(),
-                                Content = post.Content
+                                Content = post.Content,
+                                CreatedAt = post.CreatedAt
                             });
             return posts.ToPagination(page, pageSize);
         }

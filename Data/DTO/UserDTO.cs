@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using AskMe.Data.Models;
 using Newtonsoft.Json;
@@ -29,6 +30,27 @@ namespace AskMe.Data.DTO
         public string UserId { get; set; }
         public string Email { get; set; }
         public string Message { get; set; }
+    }
+    public class ProfileDTO
+    {
+        public string Name { get; set; }
+        public string Bio { get; set; }
+        public string Email { get; set; }
+        public int Followers { get; set; }
+        public Boolean Followed { get; set; }
+        public int Following { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string? Avatar { get; set; }
+
+    }
+    public class ProfileItemDTO
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public int Followers { get; set; }
+        public Boolean Followed { get; set; }
+        public int Following { get; set; }
+        public string? Avatar { get; set; }
     }
     public class UserLoginDTO
     {

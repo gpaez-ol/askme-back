@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -65,6 +66,7 @@ namespace AskMe.Data.Models
         public UserType Type { get; set; }
         public ICollection<User> Followers { get; set; }
         public ICollection<User> Following { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum UserType

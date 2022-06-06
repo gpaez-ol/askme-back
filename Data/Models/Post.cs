@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -44,6 +45,7 @@ namespace AskMe.Data.Models
         [JsonProperty("likedBy")]
         [Required]
         public ICollection<User> LikedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }

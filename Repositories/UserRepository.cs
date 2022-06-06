@@ -58,7 +58,21 @@ namespace AskMe.Repositories
 
         public async Task<User> GetUserById(Guid id)
         {
-            return await _context.Users.Where(user => user.Id.Equals(id)).Include(user => user.Following).FirstOrDefaultAsync();
+            return await _context.Users.Where(user => user.Id.Equals(id)).Include(user => user.Following).Include(user => user.Followers).FirstOrDefaultAsync();
+        }
+        public async Task<User> GetFullUserById(Guid id)
+        {
+            return await _context.Users
+                        .Where(user => user.Id.Equals(id))
+                        .Include(user => user.Following)
+                        .ThenInclude(following => following.Following)
+                        .Include(user => user.Following)
+                        .ThenInclude(following => following.Followers)
+                        .Include(user => user.Followers)
+                        .ThenInclude(follower => follower.Following)
+                        .Include(user => user.Followers)
+                        .ThenInclude(follower => follower.Followers)
+                        .FirstOrDefaultAsync();
         }
         public async Task<User> GetUserByEmail(string email)
         {
@@ -354,12 +368,6 @@ namespace AskMe.Repositories
 
                 if (databaseUser == null || databaseUser == default(User))
                 {
-                    // return new AuthResponseModel
-                    // {
-                    //     IsSuccess = false,
-                    //     Message = "User not found in database",
-                    //     ResponseError = AuthResponseError.UserNotFound
-                    // };
                     Console.WriteLine("User not found in database");
                     return null;
                 }
