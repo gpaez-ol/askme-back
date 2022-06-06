@@ -71,6 +71,7 @@ namespace AskMe.Data.DTO
         [JsonProperty("content")]
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
+        public User? User { get; set; }
     }
 
 }

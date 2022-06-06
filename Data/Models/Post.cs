@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace AskMe.Data.Models
 {
-    public class Post : Entity
+    public class Post
     {
 
         /// <summary>
@@ -46,6 +46,11 @@ namespace AskMe.Data.Models
         [Required]
         public ICollection<User> LikedBy { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public User CreatedBy { get; set; }
+        public Guid? CreatedById { get; set; }
+        public Guid Id { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
     }
 }

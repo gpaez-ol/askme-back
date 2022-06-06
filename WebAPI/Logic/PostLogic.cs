@@ -117,7 +117,8 @@ namespace AskMe.Logic
                                 Title = post.Title,
                                 Likes = post.LikedBy.Count(),
                                 Content = post.Content,
-                                CreatedAt = post.CreatedAt
+                                CreatedAt = post.CreatedAt,
+                                User = post.CreatedBy
                             });
             return posts.ToPagination(page, pageSize);
         }
