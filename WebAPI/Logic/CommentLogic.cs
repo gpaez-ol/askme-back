@@ -43,7 +43,9 @@ namespace AskMe.Logic
                             {
                                 Id = comment.Id,
                                 Content = comment.Content,
-                                Pinned = comment.Pinned
+                                Pinned = comment.Pinned,
+                                CreatedBy = comment.CreatedBy,
+                                CreatedAt = comment.CreatedAt
                             });
             return posts.ToPagination(page, pageSize);
         }
@@ -55,7 +57,9 @@ namespace AskMe.Logic
                             {
                                 Id = comment.Id,
                                 Content = comment.Content,
-                                Pinned = comment.Pinned
+                                Pinned = comment.Pinned,
+                                CreatedBy = comment.CreatedBy,
+                                CreatedAt = comment.CreatedAt
                             });
             return posts.ToPagination(page, pageSize);
         }
@@ -120,6 +124,7 @@ namespace AskMe.Logic
                 CommentId = comment.Id,
                 PrevComment = comment,
                 CreatedById = userId,
+                CreatedAt = DateTime.Now
             };
             if (comment.Replies == null)
             {

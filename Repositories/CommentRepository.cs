@@ -17,12 +17,16 @@ namespace AskMe.Repositories
 
         public IQueryable<Comment> GetComments()
         {
-            return _context.Comments.Where(comment => comment.DeletedAt == null);
+            return _context.Comments.Include(comment => comment.CreatedBy).Where(comment => comment.DeletedAt == null);
         }
 
         public async Task<Comment> GetCommentById(Guid id)
         {
-            return await _context.Comments.Where(comment => comment.Id.Equals(id)).Include(comment => comment.PrevComment).Include(comment => comment.Post).FirstOrDefaultAsync();
+            return await _context.Comments
+                        .Where(comment => comment.Id.Equals(id))
+                        .Include(comment => comment.PrevComment)
+                        .Include(comment => comment.Post)
+                        .Include(commment => commment.CreatedBy).FirstOrDefaultAsync();
         }
         public async Task<Comment> CreateComment(Comment comment)
         {

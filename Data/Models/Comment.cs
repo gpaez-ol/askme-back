@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace AskMe.Data.Models
 {
-    public class Comment : Entity
+    public class Comment
     {
         public Guid? PostId { get; set; }
         public Post Post { get; set; }
@@ -18,5 +18,10 @@ namespace AskMe.Data.Models
         public Boolean Pinned { get; set; }
         public ICollection<Comment> Replies { get; set; }
         public ICollection<User> LikedBy { get; set; }
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public Guid? CreatedById { get; set; }
+        public User CreatedBy { get; set; }
     }
 }

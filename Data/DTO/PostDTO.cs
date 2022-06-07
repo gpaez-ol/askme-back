@@ -72,6 +72,7 @@ namespace AskMe.Data.DTO
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public User? User { get; set; }
+        public Comment? Comment { get; set; }
     }
 
 }

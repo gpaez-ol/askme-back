@@ -76,7 +76,7 @@ namespace AskMe.Logic
                 Title = post.Title,
                 CreatedById = post.CreatedById ?? new Guid(),
                 Likes = post.LikedBy.Count(),
-                Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id }).ToList(),
+                Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id, CreatedBy = comment.CreatedBy }).ToList(),
                 CreatedAt = post.CreatedAt,
                 LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
                 {
@@ -118,7 +118,8 @@ namespace AskMe.Logic
                                 Likes = post.LikedBy.Count(),
                                 Content = post.Content,
                                 CreatedAt = post.CreatedAt,
-                                User = post.CreatedBy
+                                User = post.CreatedBy,
+                                Comment = post.Comments.OrderByDescending(comment => comment.CreatedAt).FirstOrDefault()
                             });
             return posts.ToPagination(page, pageSize);
         }
@@ -150,7 +151,8 @@ namespace AskMe.Logic
                 PostId = post.Id,
                 Pinned = false,
                 Content = comment.Content,
-                CreatedById = userId
+                CreatedById = userId,
+                CreatedAt = DateTime.Now
             };
             post.Comments.Add(newComment);
             _repositoryManager.PostRepository.UpdatePost(post);
