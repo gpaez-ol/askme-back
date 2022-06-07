@@ -39,6 +39,7 @@ namespace AskMe.Logic
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.PostId != null && comment.PostId == postId)
                             .OrderBy(comment => comment.Pinned)
+                            .ThenByDescending(comment => comment.CreatedAt)
                             .Select(comment => new CommentItemDTO
                             {
                                 Id = comment.Id,
@@ -53,6 +54,7 @@ namespace AskMe.Logic
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.CommentId != null && comment.CommentId == commentId)
                             .OrderBy(comment => comment.Pinned)
+                            .ThenByDescending(comment => comment.CreatedAt)
                             .Select(comment => new CommentItemDTO
                             {
                                 Id = comment.Id,

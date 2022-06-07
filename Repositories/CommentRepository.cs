@@ -22,7 +22,9 @@ namespace AskMe.Repositories
         }
         public PostCommentItemDTO GetFirstCommentByPostId(Guid postId)
         {
-            return _context.Comments.Where(comment => comment.PostId == postId).OrderByDescending(comment => comment.CreatedAt)
+            return _context.Comments.Where(comment => comment.PostId == postId)
+            .OrderBy(comment => comment.Pinned)
+            .ThenByDescending(comment => comment.CreatedAt)
             .Select(comment => new PostCommentItemDTO
             {
                 Content = comment.Content,
