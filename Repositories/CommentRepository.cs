@@ -4,6 +4,7 @@ using AskMe.Data.Context;
 using AskMe.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AskMe.Data.DTO;
 
 namespace AskMe.Repositories
 {
@@ -18,6 +19,18 @@ namespace AskMe.Repositories
         public IQueryable<Comment> GetComments()
         {
             return _context.Comments.Include(comment => comment.CreatedBy).Where(comment => comment.DeletedAt == null);
+        }
+        public PostCommentItemDTO GetFirstCommentByPostId(Guid postId)
+        {
+            return _context.Comments.Where(comment => comment.PostId == postId).OrderByDescending(comment => comment.CreatedAt)
+            .Select(comment => new PostCommentItemDTO
+            {
+                Content = comment.Content,
+                CreatedAt = comment.CreatedAt,
+                CreatedBy = new PostProfileItemDTO { Id = comment.CreatedBy.Id, Name = comment.CreatedBy.FirstName + " " + comment.CreatedBy.LastName },
+                Id = comment.Id,
+                Pinned = comment.Pinned
+            }).FirstOrDefault();
         }
 
         public async Task<Comment> GetCommentById(Guid id)

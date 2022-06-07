@@ -71,8 +71,9 @@ namespace AskMe.Data.DTO
         [JsonProperty("content")]
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
-        public User? User { get; set; }
-        public Comment? Comment { get; set; }
+        public PostProfileItemDTO? User { get; set; }
+        public Guid? CreatedById { get; set; }
+        public PostCommentItemDTO? Comment { get; set; }
     }
 
 }

@@ -109,7 +109,6 @@ namespace AskMe.Logic
             followingIds.Add(userId);
             var posts = _repositoryManager.PostRepository.GetPosts()
                             .Where(post => post.CreatedById != null && followingIds.Contains((Guid)post.CreatedById))
-                            .OrderByDescending(post => post.CreatedAt)
                             .Select(post => new PostItemDTO
                             {
                                 Id = post.Id,
@@ -118,10 +117,15 @@ namespace AskMe.Logic
                                 Likes = post.LikedBy.Count(),
                                 Content = post.Content,
                                 CreatedAt = post.CreatedAt,
-                                User = post.CreatedBy,
-                                Comment = post.Comments.OrderByDescending(comment => comment.CreatedAt).FirstOrDefault()
+                                CreatedById = post.CreatedById,
                             });
-            return posts.ToPagination(page, pageSize);
+            var paginatedPosts = posts.ToPagination(page, pageSize);
+            paginatedPosts.Content.ToList().ForEach(post =>
+            {
+                post.User = _repositoryManager.UserRepository.GetPostUserById(post.CreatedById.GetValueOrDefault());
+                post.Comment = _repositoryManager.CommentRepository.GetFirstCommentByPostId(post.Id);
+            });
+            return paginatedPosts;
         }
         public async Task LikePost(Guid postId, Guid userId)
         {

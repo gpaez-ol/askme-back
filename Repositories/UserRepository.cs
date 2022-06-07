@@ -60,6 +60,14 @@ namespace AskMe.Repositories
         {
             return await _context.Users.Where(user => user.Id.Equals(id)).Include(user => user.Following).Include(user => user.Followers).FirstOrDefaultAsync();
         }
+        public PostProfileItemDTO GetPostUserById(Guid id)
+        {
+            return _context.Users.Where(user => user.Id.Equals(id)).Select(user => new PostProfileItemDTO
+            {
+                Id = user.Id,
+                Name = user.FirstName + " " + user.LastName
+            }).FirstOrDefault();
+        }
         public async Task<User> GetFullUserById(Guid id)
         {
             return await _context.Users
