@@ -76,7 +76,7 @@ namespace AskMe.Logic
                 Title = post.Title,
                 CreatedById = post.CreatedById ?? new Guid(),
                 Likes = post.LikedBy.Count(),
-                Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id, CreatedBy = comment.CreatedBy }).ToList(),
+                Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id, CreatedBy = comment.CreatedBy, CreatedAt = comment.CreatedAt }).ToList(),
                 CreatedAt = post.CreatedAt,
                 LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
                 {
