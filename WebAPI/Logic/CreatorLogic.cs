@@ -67,23 +67,23 @@ namespace AskMe.Logic
             _repositoryManager.UserRepository.UpdateUser(user);
             _repositoryManager.Save();
         }
-        public async Task<ProfileDTO> GetProfile(Guid userId)
+        public async Task<ProfileDTO> GetProfile(Guid userId, Guid creatorId)
         {
-            var user = await _repositoryManager.UserRepository.GetUserById(userId);
-            if (user == null)
+            var creator = await _repositoryManager.UserRepository.GetUserById(creatorId);
+            if (creator == null)
             {
                 Console.WriteLine("user was null");
             }
             var profile = new ProfileDTO
             {
-                Avatar = user.Avatar ?? "",
-                Name = user.FirstName + " " + user.LastName,
-                Bio = user.Bio,
-                CreatedAt = user.CreatedAt,
-                Email = user.Email,
-                Followed = userId == user.Id || user.Followers.Any(user => user.Id == userId),
-                Followers = user.Followers.Count(),
-                Following = user.Following.Count()
+                Avatar = creator.Avatar ?? "",
+                Name = creator.FirstName + " " + creator.LastName,
+                Bio = creator.Bio,
+                CreatedAt = creator.CreatedAt,
+                Email = creator.Email,
+                Followed = userId == creator.Id || creator.Followers.Any(user => user.Id == userId),
+                Followers = creator.Followers.Count(),
+                Following = creator.Following.Count()
             };
             return profile;
         }

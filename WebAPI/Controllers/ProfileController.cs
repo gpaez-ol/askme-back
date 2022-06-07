@@ -26,10 +26,10 @@ namespace WebAPI.Controllers
         // / This Get method brings the profile of a user
         // / </summary>
         // / <returns>Ok(post)</returns>
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<ProfileDTO>> GetProfile(Guid userId)
+        [HttpGet("{userId}/{creatorId}")]
+        public async Task<ActionResult<ProfileDTO>> GetProfile(Guid userId, Guid creatorId)
         {
-            var posts = await _creatorLogic.GetProfile(userId);
+            var posts = await _creatorLogic.GetProfile(userId, creatorId);
             return Ok(posts);
         }
         /*ProfileDTO*/
