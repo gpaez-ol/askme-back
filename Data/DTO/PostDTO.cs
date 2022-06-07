@@ -51,6 +51,7 @@ namespace AskMe.Data.DTO
         public string Content { get; set; }
         public Guid CreatedById { get; set; }
         public int Likes { get; set; }
+        public bool Liked { get; set; }
         public ICollection<UserItemDTO>? LikedByPrev { get; set; }
         public ICollection<CommentItemDTO>? Comments { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -68,6 +69,7 @@ namespace AskMe.Data.DTO
         public string Title { get; set; }
         [JsonProperty("likes")]
         public int Likes { get; set; }
+        public bool Liked { get; set; }
         [JsonProperty("content")]
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }

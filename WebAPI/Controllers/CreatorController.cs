@@ -55,5 +55,17 @@ namespace WebAPI.Controllers
             await _creatorLogic.UnFollowCreator(creatorId, userId);
             return Ok();
         }
+        /*CreatorItemDTO*/
+        //Get controller
+        // / <summary>
+        // / This Get method brings a list of creators
+        // / </summary>
+        // / <returns>Ok(post)</returns>
+        [HttpGet("posts/{creatorId}/{userId}")]
+        public async Task<ActionResult<PaginationResult<PostItemDTO>>> GetPosts(Guid creatorId, Guid userId, [FromQuery] int page = 0, [FromQuery] int pageSize = 10)
+        {
+            var posts = await _creatorLogic.GetPosts(creatorId, userId, page, pageSize);
+            return Ok(posts);
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace AskMe.Repositories
         {
             return _context.Posts
                         .Include(post => post.LikedBy)
+                        .Include(post => post.CreatedBy)
                         .Where(post => post.DeletedAt == null);
         }
 

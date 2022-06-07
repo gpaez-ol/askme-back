@@ -87,6 +87,24 @@ namespace AskMe.Logic
             };
             return profile;
         }
+        public async Task<PaginationResult<PostItemDTO>> GetPosts(Guid creatorId, Guid userId, int page, int pageSize)
+        {
+            var user = await _repositoryManager.UserRepository.GetUserById(creatorId);
+            var posts = _repositoryManager.PostRepository.GetPosts()
+                            .Where(post => post.CreatedById == creatorId)
+                            .Select(post => new PostItemDTO
+                            {
+                                Id = post.Id,
+                                ImageRef = post.ImageRef ?? null,
+                                Title = post.Title,
+                                Likes = post.LikedBy.Count(),
+                                Liked = post.LikedBy.Any(liker => liker.Id == userId),
+                                Content = post.Content,
+                                CreatedAt = post.CreatedAt,
+                                User = new PostProfileItemDTO { Id = user.Id, Name = user.FirstName + " " + user.LastName }
+                            });
+            return posts.ToPagination(page, pageSize);
+        }
         public async Task<ICollection<ProfileItemDTO>> GetFollowers(Guid userId, Guid creatorId)
         {
             var creator = await _repositoryManager.UserRepository.GetFullUserById(creatorId);

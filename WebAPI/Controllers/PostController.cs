@@ -49,10 +49,10 @@ namespace WebAPI.Controllers
         // / This Get method brings the details of a post
         // / </summary>
         // / <returns>Ok(post)</returns>
-        [HttpGet("details/{postId}")]
-        public async Task<PostDTO> GetPost(Guid postId)
+        [HttpGet("details/{postId}/{userId}")]
+        public async Task<PostDTO> GetPost(Guid postId, Guid userId)
         {
-            var post = await _postLogic.GetPost(postId);
+            var post = await _postLogic.GetPost(postId, userId);
             return post;
         }
         /*PostItemDTO*/

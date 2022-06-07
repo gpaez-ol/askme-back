@@ -65,7 +65,7 @@ namespace AskMe.Logic
             };
             return detailPost;
         }
-        public async Task<PostDTO> GetPost(Guid postId)
+        public async Task<PostDTO> GetPost(Guid postId, Guid userId)
         {
             // To-Do validate user exists, and is owner of the post
             var post = await _repositoryManager.PostRepository.GetPostById(postId);
@@ -76,6 +76,7 @@ namespace AskMe.Logic
                 Title = post.Title,
                 CreatedById = post.CreatedById ?? new Guid(),
                 Likes = post.LikedBy.Count(),
+                Liked = post.LikedBy.Any(liker => liker.Id == userId),
                 Comments = post.Comments.Select(comment => new CommentItemDTO { Content = comment.Content, Id = comment.Id, CreatedBy = comment.CreatedBy, CreatedAt = comment.CreatedAt }).ToList(),
                 CreatedAt = post.CreatedAt,
                 LikedByPrev = post.LikedBy.Select(user => new UserItemDTO
@@ -97,6 +98,7 @@ namespace AskMe.Logic
                                 ImageRef = post.ImageRef ?? null,
                                 Title = post.Title,
                                 Likes = post.LikedBy.Count(),
+                                Liked = post.LikedBy.Any(liker => liker.Id == userId),
                                 Content = post.Content,
                                 CreatedAt = post.CreatedAt
                             });
@@ -108,6 +110,7 @@ namespace AskMe.Logic
             var followingIds = user.Following.Select(following => following.Id).ToList();
             followingIds.Add(userId);
             var posts = _repositoryManager.PostRepository.GetPosts()
+                            .OrderByDescending(post => post.CreatedAt)
                             .Where(post => post.CreatedById != null && followingIds.Contains((Guid)post.CreatedById))
                             .Select(post => new PostItemDTO
                             {
@@ -115,6 +118,7 @@ namespace AskMe.Logic
                                 ImageRef = post.ImageRef ?? null,
                                 Title = post.Title,
                                 Likes = post.LikedBy.Count(),
+                                Liked = post.LikedBy.Any(liker => liker.Id == userId),
                                 Content = post.Content,
                                 CreatedAt = post.CreatedAt,
                                 CreatedById = post.CreatedById,

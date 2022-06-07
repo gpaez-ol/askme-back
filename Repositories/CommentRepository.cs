@@ -31,7 +31,7 @@ namespace AskMe.Repositories
                 CreatedAt = comment.CreatedAt,
                 CreatedBy = new PostProfileItemDTO { Id = comment.CreatedBy.Id, Name = comment.CreatedBy.FirstName + " " + comment.CreatedBy.LastName },
                 Id = comment.Id,
-                Pinned = comment.Pinned
+                Pinned = comment.Pinned,
             }).FirstOrDefault();
         }
 
