@@ -80,6 +80,7 @@ namespace AskMe.Data.DTO
         public string UserId { get; set; }
         public string Message { get; set; }
         public TokenDTO Tokens { get; set; }
+        public UserType? Type { get; set; }
     }
 
     public class TokenDTO

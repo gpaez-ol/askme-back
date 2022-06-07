@@ -382,6 +382,7 @@ namespace AskMe.Repositories
                         ExpiresIn = result.ExpiresIn,
                         RefreshToken = result.RefreshToken
                     },
+                    Type = databaseUser.Type
                 };
             }
             catch (UserNotFoundException e)
