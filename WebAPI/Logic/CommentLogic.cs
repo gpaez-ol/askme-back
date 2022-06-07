@@ -38,7 +38,7 @@ namespace AskMe.Logic
         public PaginationResult<CommentItemDTO> GetCommentsOnPost(Guid postId, int page, int pageSize)
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.PostId != null && comment.PostId == postId)
-                            .OrderBy(comment => comment.Pinned)
+                            .OrderByDescending(comment => comment.Pinned)
                             .ThenByDescending(comment => comment.CreatedAt)
                             .Select(comment => new CommentItemDTO
                             {
@@ -53,7 +53,7 @@ namespace AskMe.Logic
         public PaginationResult<CommentItemDTO> GetCommentsOnComment(Guid commentId, int page, int pageSize)
         {
             var posts = _repositoryManager.CommentRepository.GetComments().Where(comment => comment.CommentId != null && comment.CommentId == commentId)
-                            .OrderBy(comment => comment.Pinned)
+                            .OrderByDescending(comment => comment.Pinned)
                             .ThenByDescending(comment => comment.CreatedAt)
                             .Select(comment => new CommentItemDTO
                             {
